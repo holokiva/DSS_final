@@ -1,0 +1,33 @@
+services:
+  api:
+    build:
+      context: ./TodoApi
+      dockerfile: Dockerfile
+    container_name: todo-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://0.0.0.0:3087
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=tododb;Username=todo;Password=todo123
+      Jwt__Key: SUPER_SECRET_TODO_API_KEY_CHANGE_IN_PRODUCTION_2026
+      Jwt__Issuer: TodoApi
+      Jwt__Audience: TodoApi.Client
+      Jwt__ExpirationMinutes: 120
+    ports:
+      - "3087:3087"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: todo-postgres
+    environment:
+      POSTGRES_DB: tododb
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

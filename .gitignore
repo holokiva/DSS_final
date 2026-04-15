@@ -1,0 +1,12 @@
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.db
+*.log
+TodoApi/bin/
+TodoApi/obj/
+TodoApi/.vs/
+**/appsettings.Local.json
